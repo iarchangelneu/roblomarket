@@ -21,7 +21,7 @@
                     <input type="password" name="password_repeat" id="password_repeat" v-model="password_repeat"
                         placeholder="Повторите пароль">
                 </div>
-
+                <small>{{ error }}</small>
                 <button @click="register">Регистрация</button>
 
                 <div class="text-center">
@@ -42,6 +42,7 @@ export default {
             email: '',
             password: '',
             password_repeat: '',
+            error: ''
         }
     },
     methods: {
@@ -60,12 +61,15 @@ export default {
                     if (res.status == 202) {
                         document.cookie = `Authorization=${res.data.token}; expires=Fri, 31 Dec 2023 23:59:59 GMT; path=/`;
                         window.location.href = '/account'
-
+                    }
+                    else {
+                        this.error = data.username
                     }
                 })
                 .catch((error) => {
-                    this.error = error.response.data.detail
+                    this.error = error.response.data.username[0]
                     console.log(error.response);
+
                 });
 
         },
@@ -95,6 +99,12 @@ useSeoMeta({
 .page {
     height: 100vh;
     background-image: url('@/assets/img/reg.png');
+
+    small {
+        color: fff;
+        font-family: var(--oxy);
+        font-size: 14px;
+    }
 
     .form {
         height: 100vh;

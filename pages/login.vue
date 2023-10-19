@@ -16,7 +16,7 @@
                     <label for="password">Пароль</label>
                     <input type="password" name="password" id="password" v-model="password" placeholder="Введите пароль">
                 </div>
-
+                <small>{{ error }}</small>
                 <button @click="login">Войти</button>
 
                 <div class="text-center">
@@ -37,6 +37,7 @@ export default {
             email: '',
             password: '',
             password_repeat: '',
+            error: '',
         }
     },
     methods: {
@@ -63,7 +64,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error);
-                    // this.error = error.response.data.non_field_errors.toString()
+                    this.error = error.response.data.non_field_errors.toString()
                 });
         },
     },
@@ -92,6 +93,12 @@ useSeoMeta({
 .page {
     height: 100vh;
     background-image: url('@/assets/img/reg.png');
+
+    small {
+        color: red;
+        font-family: var(--oxy);
+        font-size: 14px;
+    }
 
     .form {
         height: 100vh;
