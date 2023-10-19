@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap');
+
+:root {
+    --unb: 'Unbounded', sans-serif;
+    --oxy: 'Oxygen', sans-serif;
+
+}
+
+.collapse {
+    display: none;
+    transition: height 0.3s ease-in-out;
+    /* Добавляем анимацию для высоты */
+}
+
+.collapse.show {
+    display: block;
+}
+
+body {
+    overflow-x: hidden;
+    background: #FFFFFF;
+}
+
+body::-webkit-scrollbar {
+    width: 0;
+}
+
+html {
+    scroll-behavior: smooth !important;
+
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.ql-toolbar.ql-snow {
+    border: 2px solid #000;
+}
+
+.swiper-button-disabled {
+    opacity: 0.4 !important;
+    transition: all .3s ease;
+}
+
+h1, h2, h3, h4, h5, h6, span, p, a, small, div, li {
+    font-variant-numeric: lining-nums proportional-nums !important;
+}
