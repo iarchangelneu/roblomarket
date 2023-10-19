@@ -73,15 +73,16 @@
 
                 </div>
             </div> -->
-            <div class="scrollik">
-                <!-- <div class="empty">
-                    <h1>Список операций будет доступен, когда Вы пополните или выведете средства с баланса</h1>
+            <div class="empty" v-if="transactions.length <= 0">
+                <h1>Список операций будет доступен, когда Вы пополните или выведете средства с баланса</h1>
 
-                    <div class="buttons">
-                        <NuxtLink to="/catalog">Магазин</NuxtLink>
-                        <NuxtLink to="/sale">Продажа</NuxtLink>
-                    </div>
-                </div> -->
+                <div class="buttons">
+                    <NuxtLink to="/catalog">Магазин</NuxtLink>
+                    <NuxtLink to="/sale">Продажа</NuxtLink>
+                </div>
+            </div>
+            <div class="scrollik" v-else>
+
                 <div class="mobtrans">
                     <div class="mobbody">
                         <div class="mob__item" v-for="item in transactions" :key="item">
@@ -153,11 +154,11 @@
         </div>
 
         <div class="balance" v-if="activeTab == 2">
+            <div class="empty" v-if="balance.length <= 0">
+                <h1>Список операций будет доступен, когда Вы пополните или выведете средства с баланса</h1>
+            </div>
+            <div class="scrollik" v-else>
 
-            <div class="scrollik">
-                <!-- <div class="empty">
-                    <h1>Список операций будет доступен, когда Вы пополните или выведете средства с баланса</h1>
-                </div> -->
                 <div class="mobtrans">
 
                     <div class="mob__body" v-for="item in balance.slice().reverse()" :key="item.id">
@@ -342,16 +343,16 @@ useSeoMeta({
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 700px;
+            height: 500px;
 
             h1 {
                 font-size: 24px;
                 font-style: normal;
                 font-weight: 400;
                 line-height: normal;
-                font-family: var(--oxy);
+                font-family: var(--unb);
                 text-transform: none;
-                color: #fff;
+                color: #000;
             }
         }
 
@@ -550,16 +551,16 @@ useSeoMeta({
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 700px;
+            height: 500px;
 
             h1 {
                 font-size: 24px;
                 font-style: normal;
                 font-weight: 400;
                 line-height: normal;
-                font-family: var(--oxy);
+                font-family: var(--unb);
                 text-transform: none;
-                color: #fff;
+                color: #000;
                 margin: 0;
 
                 @media (max-width: 1024px) {
@@ -575,7 +576,7 @@ useSeoMeta({
                 a {
                     border-radius: 10px;
                     border: 0;
-                    background: var(--iris-100, #FF1D00);
+                    background: var(--iris-100, #A772FF);
                     padding: 10px 3.802vw;
 
                     font-size: 20px;
@@ -593,7 +594,7 @@ useSeoMeta({
 
                     &:last-child {
                         border: 0;
-                        background: #0500FF;
+                        background: #452777;
 
 
                     }

@@ -6,7 +6,7 @@
                 <NuxtLink to="/sale">продажа</NuxtLink>
                 <NuxtLink to="/catalog">магазин</NuxtLink>
             </div>
-            <NuxtLink to="/">
+            <NuxtLink to="/" class="mr-5">
                 <img src="@/assets/img/headerlogo.svg" alt="">
             </NuxtLink>
             <div class="account" v-if="isAuth">
@@ -463,7 +463,6 @@ header {
         }
 
         .reg {
-            display: block;
             font-size: 20px;
             font-style: normal;
             font-weight: 400;
@@ -484,7 +483,6 @@ header {
                 gap: 14px;
 
                 span {
-                    display: block;
                     font-size: 20px;
                     font-style: normal;
                     font-weight: 400;
@@ -508,8 +506,14 @@ header {
                 font-family: var(--oxy);
                 color: #fff;
             }
+
+            img {
+                align-self: center;
+                /* Добавьте это свойство для логотипа */
+            }
         }
     }
+
 }
 
 #menu__toggle {

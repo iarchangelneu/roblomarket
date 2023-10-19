@@ -16,47 +16,28 @@
                 <button @click.stop="toggleSort()">Сортировка</button>
             </div>
             <div class="sort__body" :class="{ activeFil: sort }">
-                <h2 @click="sortActive = 1" :class="{ activeh: sortActive == 1 }">Сначала дешевле</h2>
-                <h2 @click="sortActive = 2" :class="{ activeh: sortActive == 2 }">Сначала дороже</h2>
-                <h2 @click="sortActive = 2" :class="{ activeh: sortActive == 3 }">Полулярное</h2>
-                <h2 @click="sortActive = 2" :class="{ activeh: sortActive == 4 }">Новое</h2>
+                <h2 @click="sortBy('price'), sortActive = 1" :class="{ activeh: sortActive == 1 }">Сначала дешевле</h2>
+                <h2 @click="sortBy('-price'), sortActive = 2" :class="{ activeh: sortActive == 2 }">Сначала дороже</h2>
+                <h2 @click="sortBy('rating'), sortActive = 3" :class="{ activeh: sortActive == 3 }">Полулярное</h2>
+                <h2 @click="sortBy('-rating'), sortActive = 4" :class="{ activeh: sortActive == 4 }">Новое</h2>
             </div>
             <div class="filter__body" @click="stopPropagation" :class="{ activeFil: filter }">
                 <div class="w-100">
                     <h2>кАТЕГОРИЯ:</h2>
-                    <div class="rare">
-                        <div class="rare__gap">
-                            <label class="custom-checkbox">
-                                <input type="checkbox">
-                                <p class="checkbox-text m-0">Скаут
-                                </p>
-                            </label>
-                            <label class="custom-checkbox">
-                                <input type="checkbox">
-                                <p class="checkbox-text m-0">Солдат
-                                </p>
-                            </label>
-                            <label class="custom-checkbox">
-                                <input type="checkbox">
-                                <p class="checkbox-text m-0">Пиро
-                                </p>
-                            </label>
-                            <label class="custom-checkbox">
-                                <input type="checkbox">
-                                <p class="checkbox-text m-0">Подрывник
-                                </p>
-                            </label>
-                        </div>
-
-                    </div>
+                    <select v-model="selectedCategory" @change="applyFilters">
+                        <option value="" disabled selected>Любой</option>
+                        <option v-for="item in filters" :key="item">{{ item }}</option>
+                    </select>
                 </div>
                 <div class="types">
                     <div>
                         <h2>Цена</h2>
                         <div class="price">
-                            <input type="number" id="from" name="from" placeholder="от">
+                            <input type="number" id="from" name="from" placeholder="от" v-model="minPrice"
+                                @input="applyFilters">
                             <img src="@/assets/img/line.svg" alt="">
-                            <input type="number" id="to" name="to" placeholder="до">
+                            <input type="number" id="to" name="to" placeholder="до" v-model="maxPrice"
+                                @input="applyFilters">
                         </div>
                     </div>
                 </div>
@@ -95,6 +76,16 @@ export default {
             catalog: [],
             pathUrl: 'https://roblomarket.kz',
             search: '',
+            minPrice: null,
+            maxPrice: null,
+            filters: [
+                "Characters",
+                "Clothing",
+                "Accessories",
+                "Heads",
+                "Animations",
+            ],
+            selectedCategory: '',
         }
     },
     methods: {
@@ -117,13 +108,12 @@ export default {
             }
         },
         getCatalog() {
-            const url = `${this.pathUrl}/api/products/catalog`
+            const url = `${this.pathUrl}/api/products/catalog`;
 
             axios
                 .get(url)
                 .then(response => {
                     this.catalog = response.data;
-                    // this.filters = response.data.info_add.filter_type
                 })
                 .catch(error => {
                     console.error(error);
@@ -152,14 +142,8 @@ export default {
         },
         applyFilters() {
             let queryParams = '';
-            if (this.selectedRarity) {
-                queryParams += `&tags__редкость=${this.selectedRarity}`;
-            }
-            if (this.selectedHero) {
-                queryParams += `&tags__герой=${this.selectedHero}`;
-            }
-            if (this.selectedCell) {
-                queryParams += `&tags__ячейка=${this.selectedCell}`;
+            if (this.selectedCategory) {
+                queryParams += `&type=${this.selectedCategory}`;
             }
             if (this.minPrice !== null) {
                 queryParams += `&min_price=${this.minPrice}`;
@@ -181,6 +165,19 @@ export default {
                     this.filters = response.data.info_add.filter_type
                 })
                 .catch((error) => {
+                    console.error(error);
+                });
+        },
+        sortBy(ordering) {
+            this.sort = false
+            const path = `${this.pathUrl}/api/products/catalog?ordering=${ordering}`;
+            axios
+                .get(path)
+                .then(response => {
+                    this.catalog = response.data;
+
+                })
+                .catch(error => {
                     console.error(error);
                 });
         },
@@ -459,8 +456,10 @@ useSeoMeta({
             background: #CFB2FF;
             padding: 15px 20px;
             display: flex;
+            flex-direction: column;
             z-index: 5;
-            gap: 71px;
+            gap: 20px;
+
 
             @media (max-width: 1024px) {
                 flex-direction: column;
@@ -468,6 +467,25 @@ useSeoMeta({
                 width: 100%;
                 left: 0;
                 margin-top: 125px;
+            }
+
+            select {
+                border-radius: 10px;
+                border: 2px solid #A772FF;
+                background: #fff;
+                color: #000;
+                padding: 5px 10px;
+
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                font-family: var(--oxy);
+                width: 100%;
+
+                @media (max-width: 1024px) {
+                    width: 100%;
+                }
             }
 
             .price {

@@ -11,7 +11,10 @@
                     aria-describedby="basic-addon1" v-model="search" @input="searchProducts">
             </div>
         </div>
-
+        <div class="empty" v-if="inventory.length <= 0">
+            <img src="@/assets/img/empty.png" class="img-fluid" alt="">
+            <h1>инвентарь пока пуст</h1>
+        </div>
         <div class="catalog__items">
             <div class="catalog__item" v-for="item in inventory" :key="item.ied">
                 <div class="img">
@@ -163,6 +166,32 @@ useSeoMeta({
 
     @media (max-width: 1024px) {
         padding: 150px 20px 50px;
+    }
+
+    .empty {
+        margin-top: 60px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+
+        h1 {
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 130%;
+            /* 26px */
+            text-transform: uppercase;
+            font-family: var(--unb);
+            color: #000;
+            text-align: center;
+
+            @media (max-width: 1024px) {
+                font-size: 16px;
+            }
+        }
     }
 
     .text-right {

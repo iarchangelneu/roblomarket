@@ -20,7 +20,7 @@
                 <button @click="login">Войти</button>
 
                 <div class="text-center">
-                    <span>Нет аккаунта? <NuxtLink to="/login">Регистрация</NuxtLink></span>
+                    <span>Нет аккаунта? <NuxtLink to="/register">Регистрация</NuxtLink></span>
                 </div>
             </div>
         </div>
